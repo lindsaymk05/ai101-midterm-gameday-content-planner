@@ -1,65 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameDay Content Planner</title>
+  <meta name="description" content="A simple game-day content planner for college athletics social media teams.">
+  <title>GameDay | Content Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <header class="header">
-    <p class="eyebrow">ATHLETICS SOCIAL MEDIA</p>
-    <h1>GameDay Content Planner</h1>
-    <p>Plan your posts. Stay organized. Own game day.</p>
-  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="GameDay home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>GameDay<span class="brand-sub">CONTENT STUDIO</span></span>
+      </a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span> Overview</a>
+      <a class="nav-link" href="#checklist"><span class="nav-icon">✓</span> Game-day checklist</a>
+      <a class="nav-link" href="#schedule"><span class="nav-icon">◷</span> Posting schedule</a>
+      <div class="sidebar-note">
+        <span class="note-icon">✦</span>
+        <strong>One game. One plan.</strong>
+        <p>Keep every post, task, and moment organized from warmups to the final whistle.</p>
+      </div>
+      <div class="sidebar-footer"><span class="status-dot"></span> Your workspace is saved on this device</div>
+    </aside>
 
-  <main class="container">
-    <section class="panel">
-      <h2>Plan Your Game</h2>
-      <label for="sport">Select a sport</label>
-      <select id="sport">
-        <option value="Women's Lacrosse">Women's Lacrosse</option>
-        <option value="Men's Lacrosse">Men's Lacrosse</option>
-        <option value="Football">Football</option>
-        <option value="Women's Soccer">Women's Soccer</option>
-        <option value="Basketball">Basketball</option>
-      </select>
-
-      <label for="opponent">Opponent</label>
-      <input id="opponent" type="text" placeholder="Enter opponent name">
-
-      <label for="gameDate">Game date</label>
-      <input id="gameDate" type="date">
-    </section>
-
-    <section class="panel">
-      <div class="section-heading">
+    <main class="main-content" id="overview">
+      <header class="topbar">
         <div>
-          <p class="eyebrow">YOUR WORKFLOW</p>
-          <h2>Content Checklist</h2>
+          <p class="eyebrow">ATHLETICS SOCIAL MEDIA</p>
+          <h1>Game-day command center<span class="heading-period">.</span></h1>
+          <p class="subheading">Your content plan, all in one place.</p>
         </div>
-        <span id="progressText">0 of 8 complete</span>
+        <div class="today-pill"><span class="live-dot"></span><span id="today-label">YOUR GAME DAY</span></div>
+      </header>
+
+      <section class="game-card" aria-labelledby="game-title">
+        <div class="game-card-pattern" aria-hidden="true"></div>
+        <div class="game-card-content">
+          <div class="game-card-kicker"><span class="tiny-star">✦</span> NEXT UP</div>
+          <h2 id="game-title">Make every moment count.</h2>
+          <p id="game-summary">Add your matchup details to build your game-day plan.</p>
+          <div class="game-fields">
+            <label>
+              <span>SPORT</span>
+              <select id="sport">
+                <option value="Women's Lacrosse">Women's Lacrosse</option>
+                <option value="Men's Lacrosse">Men's Lacrosse</option>
+                <option value="Football">Football</option>
+                <option value="Women's Soccer">Women's Soccer</option>
+                <option value="Men's Soccer">Men's Soccer</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Softball">Softball</option>
+                <option value="Baseball">Baseball</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+            <label>
+              <span>OPPONENT</span>
+              <input id="opponent" type="text" placeholder="e.g. Eagles" maxlength="60">
+            </label>
+            <label>
+              <span>GAME DATE</span>
+              <input id="game-date" type="date">
+            </label>
+            <label>
+              <span>GAME TIME</span>
+              <input id="game-time" type="time">
+            </label>
+          </div>
+          <div class="game-card-bottom">
+            <span class="edit-hint">Your details save automatically.</span>
+            <button class="button button-light" id="clear-game" type="button">Reset details <span aria-hidden="true">↺</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Game-day progress overview">
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">TASKS COMPLETED</span><span class="stat-icon gold-icon">✓</span></div>
+          <div class="stat-number"><span id="completed-count">0</span><span class="stat-divider">/</span><span id="total-count">8</span></div>
+          <div class="stat-foot"><span id="completion-caption">A fresh start. Let's get organized.</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span class="stat-label">PLAN PROGRESS</span><span class="stat-icon purple-icon">↗</span></div>
+          <div class="stat-number"><span id="progress-percent">0</span><span class="percent-sign">%</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Checklist completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        </article>
+        <article class="stat-card stat-card-accent">
+          <div class="stat-top"><span class="stat-label">CONTENT WINDOWS</span><span class="stat-icon dark-icon">◷</span></div>
+          <div class="stat-number">04</div>
+          <div class="stat-foot">Pregame through postgame</div>
+        </article>
+      </section>
+
+      <div class="section-heading" id="checklist">
+        <div><p class="eyebrow">STAY ON TRACK</p><h2>Game-day checklist</h2><p class="section-description">Check off each task as you go. Your progress is saved automatically.</p></div>
+        <button class="button button-outline" id="reset-checklist" type="button">Reset checklist <span aria-hidden="true">↺</span></button>
       </div>
 
-      <div class="progress-track">
-        <div id="progressBar" class="progress-bar"></div>
-      </div>
+      <section class="content-grid">
+        <div class="panel checklist-panel">
+          <div class="panel-heading">
+            <div><h3>Your task list</h3><p>Small steps make a strong game-day story.</p></div>
+            <span class="task-count" id="task-count-badge">0 / 8</span>
+          </div>
+          <div class="checklist-progress"><div id="mini-progress"></div></div>
+          <div id="checklist-items" class="checklist-items"></div>
+          <form id="add-task-form" class="add-task-form">
+            <label class="sr-only" for="new-task">Add a custom task</label>
+            <input id="new-task" type="text" placeholder="Add your own task..." maxlength="100" autocomplete="off">
+            <button class="button button-dark" type="submit">+ Add task</button>
+          </form>
+          <p class="microcopy">Tip: Add tasks specific to your team, venue, or opponent.</p>
+        </div>
 
-      <div id="checklist"></div>
-    </section>
+        <div class="panel schedule-panel" id="schedule">
+          <div class="panel-heading">
+            <div><h3>Posting schedule</h3><p>A simple timeline for your coverage.</p></div>
+            <span class="schedule-tag">4 WINDOWS</span>
+          </div>
+          <div class="timeline" id="schedule-items">
+            <article class="timeline-item"><div class="timeline-rail"><span class="timeline-dot"></span></div><div class="timeline-body"><span class="timeline-time">2–3 HOURS BEFORE</span><h4>Build the anticipation</h4><p>Game-day graphic, matchup details, and ticket or stream information.</p><span class="content-type">PREGAME</span></div></article>
+            <article class="timeline-item"><div class="timeline-rail"><span class="timeline-dot"></span></div><div class="timeline-body"><span class="timeline-time">30–60 MINUTES BEFORE</span><h4>Bring fans behind the scenes</h4><p>Warmups, arrival moments, lineup, and atmosphere.</p><span class="content-type">WARMUPS</span></div></article>
+            <article class="timeline-item"><div class="timeline-rail"><span class="timeline-dot"></span></div><div class="timeline-body"><span class="timeline-time">DURING THE GAME</span><h4>Capture the action</h4><p>Score updates, key plays, short clips, and milestone moments.</p><span class="content-type">IN-GAME</span></div></article>
+            <article class="timeline-item"><div class="timeline-rail"><span class="timeline-dot"></span></div><div class="timeline-body"><span class="timeline-time">AFTER THE FINAL WHISTLE</span><h4>Close out the story</h4><p>Final score, standout performances, and a recap or photo gallery.</p><span class="content-type">POSTGAME</span></div></article>
+          </div>
+          <div class="schedule-tip"><span>✦</span><p><strong>Quick reminder</strong> Confirm scores, names, statistics, and approved photos before publishing.</p></div>
+        </div>
+      </section>
 
-    <section class="panel">
-      <p class="eyebrow">PLAN AHEAD</p>
-      <h2>Posting Schedule</h2>
-      <div id="schedule"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>GameDay Content Planner · Built for athletics content teams</p>
-  </footer>
-
-  <script src="app.js"></script>
+      <footer class="page-footer"><span>GAMEDAY CONTENT STUDIO</span><span>Made for the moments that matter.</span></footer>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
 </body>
 </html>
