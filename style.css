@@ -1,0 +1,224 @@
+
+/* GameDay Content Planner - Website Styling */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #10141d;
+  --panel: #1b2230;
+  --panel-light: #252e3e;
+  --text: #f5f7fb;
+  --muted: #aab5c5;
+  --accent: #eeba2b;
+  --border: #354052;
+  --success: #53d6a0;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.header {
+  padding: 48px 20px 42px;
+  text-align: center;
+  background: linear-gradient(135deg, #202b40, #111722);
+  border-bottom: 3px solid var(--accent);
+}
+
+.header h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.15;
+}
+
+.header > p:last-child {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.container {
+  width: min(100% - 32px, 900px);
+  margin: 32px auto;
+  display: grid;
+  gap: 22px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+}
+
+label {
+  display: block;
+  margin: 16px 0 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-light);
+  color: var(--text);
+  font: inherit;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.section-heading h2 {
+  margin-bottom: 10px;
+}
+
+#progressText {
+  color: var(--success);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.progress-track {
+  height: 10px;
+  margin: 10px 0 22px;
+  background: var(--panel-light);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: var(--success);
+  border-radius: 20px;
+  transition: width 0.25s ease;
+}
+
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.task:last-child {
+  border-bottom: none;
+}
+
+.task input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  margin-top: 4px;
+  accent-color: var(--success);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.task label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.task.completed label {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.task small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-time {
+  min-width: 105px;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.schedule-item h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.schedule-item p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 500px) {
+  .header {
+    padding: 36px 16px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .schedule-item {
+    gap: 10px;
+  }
+
+  .schedule-time {
+    min-width: 85px;
+    font-size: 0.85rem;
+  }
+}
