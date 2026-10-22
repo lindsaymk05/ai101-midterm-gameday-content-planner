@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDay Content Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <p class="eyebrow">ATHLETICS SOCIAL MEDIA</p>
+    <h1>GameDay Content Planner</h1>
+    <p>Plan your posts. Stay organized. Own game day.</p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Plan Your Game</h2>
+      <label for="sport">Select a sport</label>
+      <select id="sport">
+        <option value="Women's Lacrosse">Women's Lacrosse</option>
+        <option value="Men's Lacrosse">Men's Lacrosse</option>
+        <option value="Football">Football</option>
+        <option value="Women's Soccer">Women's Soccer</option>
+        <option value="Basketball">Basketball</option>
+      </select>
+
+      <label for="opponent">Opponent</label>
+      <input id="opponent" type="text" placeholder="Enter opponent name">
+
+      <label for="gameDate">Game date</label>
+      <input id="gameDate" type="date">
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR WORKFLOW</p>
+          <h2>Content Checklist</h2>
+        </div>
+        <span id="progressText">0 of 8 complete</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div id="checklist"></div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">PLAN AHEAD</p>
+      <h2>Posting Schedule</h2>
+      <div id="schedule"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>GameDay Content Planner · Built for athletics content teams</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
