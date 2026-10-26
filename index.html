@@ -8,7 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.132/Build/Cesium/Widgets/widgets.css">
   <link rel="stylesheet" href="style.css">
+  <script>window.CESIUM_BASE_URL = "https://cesium.com/downloads/cesiumjs/releases/1.132/Build/Cesium/";</script>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.132/Build/Cesium/Cesium.js"></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -22,6 +25,7 @@
       <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span> Overview</a>
       <a class="nav-link" href="#checklist"><span class="nav-icon">✓</span> Game-day checklist</a>
       <a class="nav-link" href="#schedule"><span class="nav-icon">◷</span> Posting schedule</a>
+      <a class="nav-link" href="#venue-explorer"><span class="nav-icon">◎</span> Venue explorer</a>
       <div class="sidebar-note">
         <span class="note-icon">✦</span>
         <strong>One game. One plan.</strong>
@@ -133,6 +137,39 @@
             <article class="timeline-item"><div class="timeline-rail"><span class="timeline-dot"></span></div><div class="timeline-body"><span class="timeline-time">AFTER THE FINAL WHISTLE</span><h4>Close out the story</h4><p>Final score, standout performances, and a recap or photo gallery.</p><span class="content-type">POSTGAME</span></div></article>
           </div>
           <div class="schedule-tip"><span>✦</span><p><strong>Quick reminder</strong> Confirm scores, names, statistics, and approved photos before publishing.</p></div>
+        </div>
+      </section>
+
+
+      <section class="venue-section" id="venue-explorer" aria-labelledby="venue-title">
+        <div class="section-heading venue-heading">
+          <div>
+            <p class="eyebrow">MAP YOUR MATCHUP</p>
+            <h2 id="venue-title">3D game venue explorer</h2>
+            <p class="section-description">Explore sample college sports venues on an interactive 3D globe.</p>
+          </div>
+          <span class="schedule-tag">CESIUMJS</span>
+        </div>
+        <div class="venue-panel">
+          <div class="venue-map-wrap">
+            <div id="cesium-globe" role="region" aria-label="Interactive 3D globe showing sample sports venues"></div>
+            <div id="cesium-status" class="cesium-status" role="status" aria-live="polite">Loading 3D globe…</div>
+          </div>
+          <aside class="venue-details" aria-live="polite">
+            <p class="eyebrow">SELECTED VENUE</p>
+            <h3 id="venue-name">Alvernia University</h3>
+            <p id="venue-description">Choose a marker on the globe or select a sample venue below.</p>
+            <p class="venue-coordinates" id="venue-coordinates">Reading, Pennsylvania</p>
+            <label class="venue-select-label" for="venue-select">Jump to a venue</label>
+            <select id="venue-select">
+              <option value="alvernia">Alvernia University · Reading, PA</option>
+              <option value="penn-state">Penn State · University Park, PA</option>
+              <option value="villanova">Villanova University · Villanova, PA</option>
+              <option value="maryland">University of Maryland · College Park, MD</option>
+              <option value="syracuse">Syracuse University · Syracuse, NY</option>
+            </select>
+            <p class="venue-note">Sample locations are for demonstration only. Confirm the exact venue before using details in a public post.</p>
+          </aside>
         </div>
       </section>
 

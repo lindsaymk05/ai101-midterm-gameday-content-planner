@@ -175,6 +175,154 @@ function setGameField(id, key) {
   });
 }
 
+
+// CesiumJS 3D venue explorer. Uses demonstration locations, not official event data.
+const venueLocations = {
+  "alvernia": {
+    name: "Alvernia University",
+    description: "A sample home-campus location for planning Golden Wolves game-day coverage.",
+    location: "Reading, Pennsylvania",
+    longitude: -75.9349,
+    latitude: 40.3078,
+    height: 8000
+  },
+  "penn-state": {
+    name: "Penn State",
+    description: "A sample college venue location for comparing away-game coverage.",
+    location: "University Park, Pennsylvania",
+    longitude: -77.8599,
+    latitude: 40.7982,
+    height: 12000
+  },
+  "villanova": {
+    name: "Villanova University",
+    description: "A sample college venue location in the Philadelphia area.",
+    location: "Villanova, Pennsylvania",
+    longitude: -75.3372,
+    latitude: 40.0379,
+    height: 9000
+  },
+  "maryland": {
+    name: "University of Maryland",
+    description: "A sample college venue location in the Washington, D.C. area.",
+    location: "College Park, Maryland",
+    longitude: -76.9378,
+    latitude: 38.9897,
+    height: 11000
+  },
+  "syracuse": {
+    name: "Syracuse University",
+    description: "A sample college venue location in central New York.",
+    location: "Syracuse, New York",
+    longitude: -76.1351,
+    latitude: 43.0392,
+    height: 10000
+  }
+};
+
+let cesiumViewer = null;
+let venueEntities = {};
+
+function setVenueDetails(key) {
+  const venue = venueLocations[key];
+  if (!venue) return;
+  $("venue-name").textContent = venue.name;
+  $("venue-description").textContent = venue.description;
+  $("venue-coordinates").textContent = venue.location;
+  $("venue-select").value = key;
+}
+
+function focusVenue(key) {
+  const venue = venueLocations[key];
+  if (!venue) return;
+  setVenueDetails(key);
+  if (cesiumViewer) {
+    cesiumViewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(venue.longitude, venue.latitude, venue.height),
+      duration: 1.2
+    });
+    Object.entries(venueEntities).forEach(([id, entity]) => {
+      entity.point.pixelSize = id === key ? 15 : 10;
+      entity.point.outlineWidth = id === key ? 3 : 2;
+    });
+  }
+}
+
+function initCesiumVenueExplorer() {
+  const status = $("cesium-status");
+  if (!window.Cesium || !$("cesium-globe")) {
+    status.textContent = "The 3D globe library did not load. Check your internet connection or try refreshing the page.";
+    return;
+  }
+
+  try {
+    cesiumViewer = new Cesium.Viewer("cesium-globe", {
+      animation: false,
+      timeline: false,
+      geocoder: false,
+      homeButton: true,
+      sceneModePicker: false,
+      navigationHelpButton: true,
+      baseLayerPicker: false,
+      fullscreenButton: false,
+      infoBox: false,
+      selectionIndicator: false,
+      shouldAnimate: false,
+      baseLayer: false,
+      terrainProvider: new Cesium.EllipsoidTerrainProvider()
+    });
+
+    // Public OpenStreetMap tiles provide a basic map without a Cesium ion token.
+    cesiumViewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      credit: "© OpenStreetMap contributors"
+    }));
+
+    Object.entries(venueLocations).forEach(([key, venue]) => {
+      const entity = cesiumViewer.entities.add({
+        id: key,
+        name: venue.name,
+        position: Cesium.Cartesian3.fromDegrees(venue.longitude, venue.latitude),
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.fromCssColorString("#eeba2b"),
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        label: {
+          text: venue.name,
+          font: "12px DM Sans",
+          fillColor: Cesium.Color.WHITE,
+          outlineColor: Cesium.Color.fromCssColorString("#171923"),
+          outlineWidth: 3,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          pixelOffset: new Cesium.Cartesian2(0, -20),
+          scaleByDistance: new Cesium.NearFarScalar(1.5e5, 1.0, 8.0e6, 0.5),
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        properties: { venueKey: key }
+      });
+      venueEntities[key] = entity;
+    });
+
+    cesiumViewer.selectedEntityChanged.addEventListener(entity => {
+      if (entity && entity.properties && entity.properties.venueKey) {
+        focusVenue(entity.properties.venueKey.getValue());
+      }
+    });
+
+    $("venue-select").addEventListener("change", event => focusVenue(event.target.value));
+    focusVenue("alvernia");
+    status.textContent = "Drag to rotate · scroll to zoom · select a marker to explore";
+    window.setTimeout(() => { if (status) status.textContent = ""; }, 6500);
+  } catch (error) {
+    console.error("Cesium venue explorer could not initialize.", error);
+    status.textContent = "The globe could not initialize. It may be blocked by network settings or a Cesium service requirement.";
+  }
+}
+
+
 function init() {
   $("sport").value = state.sport;
   $("sport").addEventListener("change", () => {
@@ -234,6 +382,7 @@ function init() {
 
   renderTasks();
   updateGameSummary();
+  initCesiumVenueExplorer();
 }
 
 init();
