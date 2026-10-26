@@ -272,11 +272,14 @@ function initCesiumVenueExplorer() {
       terrainProvider: new Cesium.EllipsoidTerrainProvider()
     });
 
-    // Public OpenStreetMap tiles provide a basic map without a Cesium ion token.
-    cesiumViewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      credit: "© OpenStreetMap contributors"
-    }));
+    // Use real aerial/satellite imagery instead of illustrated street-map tiles.
+    // ArcGIS World Imagery is a public imagery service; availability and usage
+    // remain subject to the provider's service terms and rate limits.
+    cesiumViewer.imageryLayers.addImageryProvider(
+      new Cesium.ArcGisMapServerImageryProvider({
+        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      })
+    );
 
     Object.entries(venueLocations).forEach(([key, venue]) => {
       const entity = cesiumViewer.entities.add({
