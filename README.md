@@ -28,7 +28,3 @@ This project is for college athletics communications and social media staff who 
 - The globe loads CesiumJS and OpenStreetMap tiles from external services, so an internet connection is required. This version uses a basic ellipsoid globe rather than terrain requiring a Cesium ion token.
 - Checklist and game details save only in the current browser on the current device; they do not sync across devices.
 - The app does not publish posts to social platforms or verify game scores automatically.
-
-
-### Cesium imagery troubleshooting
-The venue explorer uses CesiumJS `UrlTemplateImageryProvider` with Esri World Imagery tiles. If the imagery does not load, check the browser console and confirm the network allows requests to `server.arcgisonline.com`.

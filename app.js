@@ -272,18 +272,11 @@ function initCesiumVenueExplorer() {
       terrainProvider: new Cesium.EllipsoidTerrainProvider()
     });
 
-    // Use real aerial/satellite imagery instead of illustrated street-map tiles.
-    // ArcGIS World Imagery is a public imagery service; availability and usage
-    // remain subject to the provider's service terms and rate limits.
-    // Use Cesium's supported URL-template provider for Esri World Imagery tiles.
-    // This avoids relying on ArcGisMapServerImageryProvider, which is unavailable
-    // in some CesiumJS builds.
-    cesiumViewer.imageryLayers.addImageryProvider(
-      new Cesium.UrlTemplateImageryProvider({
-        url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        credit: "Imagery © Esri and its contributors"
-      })
-    );
+    // Public OpenStreetMap tiles provide a basic map without a Cesium ion token.
+    cesiumViewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      credit: "© OpenStreetMap contributors"
+    }));
 
     Object.entries(venueLocations).forEach(([key, venue]) => {
       const entity = cesiumViewer.entities.add({
